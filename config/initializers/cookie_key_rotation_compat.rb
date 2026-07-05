@@ -3,6 +3,9 @@
 # Temporary compatibility layer for the Rails 7 SHA256 key generator migration.
 # This accepts cookies encrypted/signed with the previous SHA1-derived keys and
 # transparently rewrites them with current keys when read.
+# TODO(rails7-cleanup): Remove this initializer after 2026-07-19 once session
+# continuity has been verified in production and no legacy-cookie login issues
+# are observed.
 Rails.application.config.after_initialize do
   next unless Rails.application.config.active_support.key_generator_hash_digest_class == OpenSSL::Digest::SHA256
 
