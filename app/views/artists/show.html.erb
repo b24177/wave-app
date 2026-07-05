@@ -15,12 +15,8 @@
         <%= cl_image_tag @artist.photo.key %>
       </div>
     </div>
-    <% @artist.posts.each do |post|%>
+    <% @posts.each do |post|%>
       <%  case post.source %>
-    <% when 'Songkick' %>
-      <%= render "shared/songkick_card", post:post %>
-    <% when 'SoundCloud' %>
-      <%= render "shared/soundcloud_card", post:post %>
     <% when 'Youtube' %>
       <%= render "shared/youtube_card", post:post%>
     <% when 'Facebook' %>
