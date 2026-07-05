@@ -42,8 +42,8 @@ module Wave
       generate.helper false
       generate.test_framework :test_unit, fixture: false
     end
-    # Initialize configuration defaults for Rails 6.1.
-    config.load_defaults 6.1
+    # Initialize configuration defaults for Rails 7.0.
+    config.load_defaults 7.0
 
     # Keep existing UJS-style remote form behavior to avoid UI regressions.
     config.action_view.form_with_generates_remote_forms = true
