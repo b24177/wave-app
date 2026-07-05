@@ -92,7 +92,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def youtube_url(query)
     a = MusicBrainz::Artist.find_by_name(query)
     if a
-      url = a.urls[:youtube]
+      url = Array(a.urls[:youtube]).compact.find { |u| u.include?('/channel/') }
       return if url.nil?
       if url.include?('channel')
         channel = Yt::Channel.new id: url.split('/')[-1]
@@ -106,7 +106,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     a = MusicBrainz::Artist.find_by_name(query)
     if a
-      url = a.urls[:soundcloud]
+      url = Array(a.urls[:soundcloud]).compact.first
       return if url.nil?
 
       client = SoundCloud.new(client_id: ENV['SC_CLIENT_ID'])
