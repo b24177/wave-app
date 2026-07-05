@@ -1,6 +1,6 @@
 <div class="universal-card feed-card">
   <div class="post-title">
-    <% if post.artist.photo %>
+    <% if post.artist.photo.attached? %>
       <%= link_to artist_path(post.artist) do %>
         <%= cl_image_tag post.artist.photo.key, class: "feed-avatar"%>
       <% end %>
