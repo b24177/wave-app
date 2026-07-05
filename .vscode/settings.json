@@ -1,0 +1,6 @@
+{
+  "rubyLsp.rubyVersionManager": {
+    "identifier": "none"
+  },
+  "rubyLsp.rubyExecutablePath": "/opt/homebrew/opt/ruby@3.1/bin/ruby"
+}

@@ -1,11 +1,7 @@
 #!/usr/bin/env ruby
 
-ENV["RAILS_ENV"] ||= ENV["RACK_ENV"] || "development"
-ENV["NODE_ENV"]  ||= "development"
-
-require "pathname"
-ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile",
-  Pathname.new(__FILE__).realpath)
+ENV["RAILS_ENV"] ||= "development"
+ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
 
 # Fix Logger::Severity compatibility for Ruby 3.1
 require 'logger'
@@ -19,7 +15,6 @@ unless defined?(Logger::Severity)
 end
 
 require "bundler/setup"
-
 require "webpacker"
 require "webpacker/webpack_runner"
 
