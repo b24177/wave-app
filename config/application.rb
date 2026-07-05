@@ -51,6 +51,12 @@ module Wave
     # Avoid requiring Active Storage variant tracking migration during upgrade.
     config.active_storage.track_variants = false
 
+    # Switch cache entry format to Rails 7.
+    config.active_support.cache_format_version = 7.0
+
+    # Disable deprecated implicit #to_s conversions.
+    config.active_support.disable_to_s_conversion = true
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
