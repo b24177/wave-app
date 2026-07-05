@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Keep test runs isolated from Spring to avoid stale-process hangs.
+DISABLE_SPRING=1 exec "$(dirname "$0")/rails" test "$@"
