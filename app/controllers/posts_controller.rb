@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.where(artist_id: followed_artists).order(created_at: 'desc')
+    @posts = Post.where(artist_id: followed_artist_ids).order(created_at: 'desc')
     current_user.notifications.unread.update_all(read_at: Time.now)
     # User.first.notifications.update_all(read_at: nil)
   end
@@ -11,9 +11,7 @@ class PostsController < ApplicationController
 
   private
 
-  def followed_artists
-    current_user.artists.select do |artist|
-      UserArtist.where(artist_id: artist.id).first.status == 'follow'
-    end
+  def followed_artist_ids
+    current_user.user_artists.where(status: 'follow').select(:artist_id)
   end
 end
