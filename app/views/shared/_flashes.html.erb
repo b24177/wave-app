@@ -6,6 +6,14 @@
     </button>
   </div>
 <% end %>
+<% if flash[:tm_summary] %>
+  <div class="alert alert-secondary alert-dismissible fade show m-1" role="alert">
+    <%= flash[:tm_summary] %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<% end %>
 <% if alert %>
   <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
     <%= alert %>
