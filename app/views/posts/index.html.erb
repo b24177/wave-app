@@ -1,10 +1,6 @@
 <div class="pb-5">
   <% @posts.each do |post| %>
   <%  case post.source %>
-    <% when 'Songkick' %>
-    <%= render "shared/songkick_card", post:post %>
-    <% when 'SoundCloud' %>
-    <%= render "shared/soundcloud_card", post:post %>
     <% when 'Youtube' %>
     <%= render "shared/youtube_card", post:post%>
     <% when 'Facebook' %>

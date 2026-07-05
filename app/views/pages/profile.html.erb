@@ -1,7 +1,12 @@
 <h1>Profile</h1>
-  <div class="user-info mt-2 mb-3 py-5 ml-4">
-    <div class="user-avatar">
-      <img src="../../assets/avatars/user.jpg" alt="">
-    </div>
-    <h3>User Name</h3>
+<div class="user-info mt-2 mb-3 py-5 ml-4">
+  <div class="user-avatar"></div>
+  <h3><%= current_user&.name.presence || current_user&.email %></h3>
+
+  <div class="mt-4">
+    <%= button_to "SIGN OUT",
+      destroy_user_session_path,
+      method: :delete,
+      class: "btn-signup-invert" %>
   </div>
+</div>
