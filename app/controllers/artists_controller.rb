@@ -1,9 +1,26 @@
 class ArtistsController < ApplicationController
+  PER_PAGE = 24
   SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram', 'Ticketmaster'].freeze
 
   def index
-    followed_artist_ids = current_user.user_artists.where(status: 'follow').select(:artist_id)
-    @artists = Artist.where(id: followed_artist_ids)
+    @query = params[:query].to_s.strip
+    @current_page = [params.fetch(:page, 1).to_i, 1].max
+
+    followed_artists = Artist.joins(:user_artists)
+                            .where(user_artists: { user_id: current_user.id, status: 'follow' })
+                            .distinct
+                            .order(:name)
+
+    if @query.present?
+      followed_artists = followed_artists.where('artists.name ILIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(@query)}%")
+    end
+
+    total_count = followed_artists.count(:id)
+    @total_pages = [((total_count.to_f) / PER_PAGE).ceil, 1].max
+
+    @artists = followed_artists.limit(PER_PAGE).offset((@current_page - 1) * PER_PAGE)
+    @has_previous_page = @current_page > 1
+    @has_next_page = @current_page < @total_pages
   end
 
   def show
