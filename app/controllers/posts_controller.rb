@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
+  SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram'].freeze
+
   def index
-    @posts = Post.where(artist_id: followed_artist_ids).order(created_at: 'desc')
+    @posts = Post.where(artist_id: followed_artist_ids)
+                 .where(source: SUPPORTED_SOURCES)
+                 .order(created_at: 'desc')
     current_user.notifications.unread.update_all(read_at: Time.now)
     # User.first.notifications.update_all(read_at: nil)
   end

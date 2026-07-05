@@ -93,14 +93,6 @@ create_post({
 })
 
 create_post({
-  artist: lust_for_youth,
-  source: 'Songkick',
-  contents: [
-    {format: 'text', data:'Saturday, November 21 @ John Dee'}
-  ]
-})
-
-create_post({
   artist: cut_copy,
   source: 'Facebook',
   contents: [
@@ -127,14 +119,6 @@ create_post({
 })
 
 create_post({
-  artist: cut_copy,
-  source: 'Songkick',
-  contents: [
-    {format: 'text', data: 'Saturday, October 7 @ Rockefeller'}
-  ]
-})
-
-create_post({
   artist: girl_in_red,
   source: 'Facebook',
   contents: [
@@ -157,14 +141,6 @@ create_post({
   contents: [
     {format: 'text', data: 'New album cover shoot'},
     {format: 'image', data: '/posts_images/gir_instagram.jpg'}
-  ]
-})
-
-create_post({
-  artist: girl_in_red,
-  source: 'Songkick',
-  contents: [
-    {format: 'text', data: 'Saturday, December 19 @ Sentrum Scene'}
   ]
 })
 

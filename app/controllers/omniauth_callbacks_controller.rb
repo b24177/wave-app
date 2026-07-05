@@ -2,12 +2,6 @@
 require 'open-uri'
 require 'nokogiri'
 
-begin
-  require 'soundcloud'
-rescue LoadError
-  # SoundCloud support is optional for local development.
-end
-
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token
   # You should configure your model like this:
@@ -92,12 +86,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
             post = Post.create!(artist: artist_record, source: 'Youtube')
             post.contents.create!(format: 'video', data: youtube_embed)
           end
-
-          soundcloud_track = soundcloud_track_id(artist_record.name)
-          if soundcloud_track.present?
-            post = Post.create!(artist: artist_record, source: 'SoundCloud')
-            post.contents.create!(format: 'audio', data: soundcloud_track)
-          end
         end
 
         UserArtist.find_or_create_by!(artist: artist_record, user: @user) { |ua| ua.status = 'follow' }
@@ -122,30 +110,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     iframe&.[]('src')&.split('//')&.last
   rescue StandardError => e
     Rails.logger.warn("YouTube enrichment failed for #{query}: #{e.class} #{e.message}")
-    nil
-  end
-
-  def soundcloud_track_id(query)
-    return unless defined?(SoundCloud)
-
-    a = MusicBrainz::Artist.find_by_name(query)
-    return if a.nil?
-
-    url = Array(a.urls[:soundcloud]).compact.first
-    return if url.nil?
-
-    client = SoundCloud.new(client_id: ENV['SC_CLIENT_ID'])
-    tracks = if url.include?('/tracks')
-               client.get('/resolve', url: url)
-             else
-               client.get('/resolve', url: "#{url}/tracks")
-             end
-
-    return if tracks.empty?
-
-    tracks.first.uri.split('/').last
-  rescue StandardError => e
-    Rails.logger.warn("SoundCloud enrichment failed for #{query}: #{e.class} #{e.message}")
     nil
   end
 end

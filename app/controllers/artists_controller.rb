@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram'].freeze
 
   def index
     followed_artist_ids = current_user.user_artists.where(status: 'follow').select(:artist_id)
@@ -7,7 +8,7 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
-    @posts = Post.where(artist: @artist)
+    @posts = Post.where(artist: @artist, source: SUPPORTED_SOURCES)
   end
 
   def follow
