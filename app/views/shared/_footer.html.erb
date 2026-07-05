@@ -2,31 +2,22 @@
 
 <% if current_user %>
   <footer class="global-footer">
-    <div class="home-icon">
-    <%= link_to posts_path(@post) do %>
-    <% if request.path == posts_path(@post) %>
-      <i class="footer-icon far fa-home-alt"></i>
-      <% else %>
-        <i class="footer-icon fal fa-home-alt"></i>
+    <div class="home-icon footer-nav-item">
+      <%= link_to posts_path(@post), aria: { label: 'Home' } do %>
+        <i class="footer-icon fas fa-home"></i>
+        <span class="footer-label">Home</span>
       <% end %>
-    <% end %>
-    <% unless current_user.notifications.unread.count == 0 %>
-      <%= render 'shared/notification_badge' %>
-    <% end %>
+      <% unless current_user.notifications.unread.count == 0 %>
+        <%= render 'shared/notification_badge' %>
+      <% end %>
     </div>
-    <%= link_to artists_path(@artist) do %>
-      <% if request.path == artists_path(@artist) %>
-        <i class="footer-icon far fa-music"></i>
-      <% else %>
-        <i class="footer-icon fal fa-music"></i>
-      <% end %>
+    <%= link_to artists_path(@artist), class: 'footer-nav-item', aria: { label: 'Artists' } do %>
+      <i class="footer-icon fas fa-music"></i>
+      <span class="footer-label">Artists</span>
     <% end %>
-    <%= link_to discover_artists_path do %>
-      <% if request.path == discover_artists_path %>
-        <i class="footer-icon far fa-globe"></i>
-      <% else %>
-        <i class="footer-icon fal fa-globe"></i>
-      <% end %>
+    <%= link_to discover_artists_path, class: 'footer-nav-item', aria: { label: 'Discover' } do %>
+      <i class="footer-icon fas fa-globe"></i>
+      <span class="footer-label">Discover</span>
     <% end %>
   </footer>
 <% end %>
