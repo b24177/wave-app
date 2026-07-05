@@ -1,9 +1,8 @@
 class ArtistsController < ApplicationController
 
   def index
-    @artists = current_user.artists.select do |artist|
-      UserArtist.where(artist_id: artist.id).first.status == 'follow'
-    end
+    followed_artist_ids = current_user.user_artists.where(status: 'follow').select(:artist_id)
+    @artists = Artist.where(id: followed_artist_ids)
   end
 
   def show
