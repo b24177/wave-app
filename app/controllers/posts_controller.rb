@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram'].freeze
+  SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram', 'Ticketmaster'].freeze
 
   def index
     @posts = Post.where(artist_id: followed_artist_ids)

@@ -1,5 +1,5 @@
 class ArtistsController < ApplicationController
-  SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram'].freeze
+  SUPPORTED_SOURCES = ['Youtube', 'Facebook', 'Twitter', 'Instagram', 'Ticketmaster'].freeze
 
   def index
     followed_artist_ids = current_user.user_artists.where(status: 'follow').select(:artist_id)

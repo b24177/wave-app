@@ -17,6 +17,8 @@
     </div>
     <% @posts.each do |post|%>
       <%  case post.source %>
+    <% when 'Ticketmaster' %>
+      <%= render "shared/ticketmaster_card", post:post %>
     <% when 'Youtube' %>
       <%= render "shared/youtube_card", post:post%>
     <% when 'Facebook' %>

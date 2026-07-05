@@ -1,0 +1,45 @@
+<% content_map = post.contents.index_by(&:format) %>
+<% event_name = content_map['event_name']&.data %>
+<% venue = content_map['venue']&.data %>
+<% city = content_map['city']&.data %>
+<% starts_at = content_map['starts_at']&.data %>
+<% ticket_url = content_map['ticket_url']&.data %>
+<% image_url = content_map['image_url']&.data %>
+
+<div class="universal-card feed-card ticketmaster-card">
+  <div class="post-title">
+    <% if post.artist.photo.attached? %>
+      <%= link_to artist_path(post.artist) do %>
+        <%= cl_image_tag post.artist.photo.key, class: "feed-avatar" %>
+      <% end %>
+    <% end %>
+    <div>
+      <h3><%= post.artist.name %> posted on <span style="color:#0166cc"><%= post.source %></span></h3>
+      <% if event_name.present? %>
+        <p><strong><%= event_name %></strong></p>
+      <% end %>
+      <% if starts_at.present? %>
+        <% parsed_time = Time.zone.parse(starts_at) rescue nil %>
+        <p><%= parsed_time ? parsed_time.strftime('%b %-d, %Y %l:%M %p') : starts_at %></p>
+      <% end %>
+      <% if venue.present? || city.present? %>
+        <p><%= [venue, city].compact.join(' • ') %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <% if image_url.present? %>
+    <img src="<%= image_url %>" class="universal-image" alt="Ticketmaster event image">
+  <% end %>
+
+  <% if ticket_url.present? %>
+    <div class="ticketmaster-cta">
+      <%= link_to 'VIEW TICKETS', ticket_url, target: '_blank', rel: 'noopener noreferrer', class: 'btn-follow' %>
+    </div>
+  <% end %>
+
+  <div class="card-share">
+    <i class="fal fa-retweet"></i>
+    <i class="fal fa-heart"></i>
+  </div>
+</div>
