@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 require 'open-uri'
 require 'nokogiri'
-require 'soundcloud'
+
+begin
+  require 'soundcloud'
+rescue LoadError
+  # SoundCloud support is optional for local development.
+end
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token
@@ -97,16 +102,19 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def soundcloud_track_id(query)
+    return unless defined?(SoundCloud)
+
     a = MusicBrainz::Artist.find_by_name(query)
     if a
       url = a.urls[:soundcloud]
       return if url.nil?
-      client = SoundCloud.new(:client_id => ENV['SC_CLIENT_ID'])
-      if url.include?('/tracks')
-        tracks = client.get('/resolve', :url => url)
-      else
-        tracks = client.get('/resolve', :url => "#{url}/tracks")
-      end
+
+      client = SoundCloud.new(client_id: ENV['SC_CLIENT_ID'])
+      tracks = if url.include?('/tracks')
+                 client.get('/resolve', url: url)
+               else
+                 client.get('/resolve', url: "#{url}/tracks")
+               end
       unless tracks.empty?
         tracks.first.uri.split('/')[-1]
       end

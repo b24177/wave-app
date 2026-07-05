@@ -32,14 +32,32 @@ class ArtistsController < ApplicationController
   end
 
   def discover
-    spotify_id = current_user.user_artists.last.artist.spotify_id
-    related_artists = RSpotify::Artist.find(spotify_id).related_artists
+    last_user_artist = current_user.user_artists.last
+    unless last_user_artist&.artist&.spotify_id.present?
+      redirect_to artists_path, alert: "Follow at least one artist before using Discover."
+      return
+    end
+
+    related_artists = RSpotify::Artist.find(last_user_artist.artist.spotify_id).related_artists
     @artists = related_artists.map do |artist|
       existing_artist = Artist.find_by(spotify_id: artist.id)
       next existing_artist if existing_artist.present?
-      related_artist = Artist.create!(name: artist.name, spotify_id: artist.id, followers: artist.followers["total"])
-      related_artist.photo.attach(io: URI.open(artist.images.last["url"]), filename: "avatar", content_type: "image/jpg")
+
+      related_artist = Artist.create!(
+        name: artist.name,
+        spotify_id: artist.id,
+        followers: artist.followers["total"]
+      )
+
+      image_url = artist.images&.last&.[]("url")
+      if image_url.present?
+        related_artist.photo.attach(io: URI.open(image_url), filename: "avatar", content_type: "image/jpg")
+      end
+
       related_artist
     end
+  rescue StandardError => e
+    Rails.logger.warn("Artists#discover failed: #{e.class} #{e.message}")
+    redirect_to artists_path, alert: "Discover is temporarily unavailable."
   end
 end
