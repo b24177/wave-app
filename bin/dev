@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+bin/rails server &
+rails_pid=$!
+
+bundle exec sidekiq -C config/sidekiq.yml &
+sidekiq_pid=$!
+
+cleanup() {
+  kill "$rails_pid" "$sidekiq_pid" 2>/dev/null || true
+  wait "$rails_pid" 2>/dev/null || true
+  wait "$sidekiq_pid" 2>/dev/null || true
+}
+
+trap cleanup INT TERM EXIT
+
+wait "$rails_pid"

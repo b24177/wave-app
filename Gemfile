@@ -23,6 +23,7 @@ gem 'omniauth-oauth2', '~> 1.8'
 gem 'omniauth-rails_csrf_protection'
 # Spotify login and data
 gem 'redis', '~> 4.0'
+gem 'sidekiq', '~> 7.3'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'cloudinary', '~> 1.16.0'
