@@ -62,7 +62,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def follow_seed_artists(user)
     Artist.first(3).each do |artist|
-      unless UserArtist.exists?(artist_id: artist.id)
+      unless user.user_artists.exists?(artist_id: artist.id)
         UserArtist.create!(artist_id: artist.id, user: user, status: 'follow')
       end
     end
@@ -71,53 +71,81 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def get_followed_artists(user)
     if @user.artists.empty?
       user.following(type: 'artist', limit: 10).each do |artist|
-        unless Artist.exists?(spotify_id: artist.id)
-          new_artist = Artist.new(name: artist.name, spotify_id: artist.id, followers: artist.followers['total'])
-          new_artist.photo.attach(io: URI.open(artist.images.last['url']), filename: 'avatar', content_type: 'image/jpg')
-          new_artist.save
-          unless youtube_url(new_artist.name).nil?
-            post = Post.create!(artist: new_artist, source: 'Youtube')
-            post.contents.create!({format: 'video', data: youtube_url(new_artist.name)})
+        artist_record = Artist.find_or_initialize_by(spotify_id: artist.id)
+
+        if artist_record.new_record?
+          artist_record.name = artist.name
+          artist_record.followers = artist.followers['total']
+          artist_record.save!
+
+          image_url = artist.images&.last&.[]('url')
+          if image_url.present?
+            begin
+              artist_record.photo.attach(io: URI.open(image_url), filename: 'avatar', content_type: 'image/jpeg')
+            rescue StandardError => e
+              Rails.logger.warn("Spotify artist image attach failed for #{artist.id}: #{e.class} #{e.message}")
+            end
           end
-          unless soundcloud_track_id(new_artist.name).nil?
-            post = Post.create!(artist: new_artist, source: 'SoundCloud')
-            post.contents.create!({format: 'audio', data: soundcloud_track_id(new_artist.name)})
+
+          youtube_embed = youtube_url(artist_record.name)
+          if youtube_embed.present?
+            post = Post.create!(artist: artist_record, source: 'Youtube')
+            post.contents.create!(format: 'video', data: youtube_embed)
+          end
+
+          soundcloud_track = soundcloud_track_id(artist_record.name)
+          if soundcloud_track.present?
+            post = Post.create!(artist: artist_record, source: 'SoundCloud')
+            post.contents.create!(format: 'audio', data: soundcloud_track)
           end
         end
-        UserArtist.find_or_create_by(artist: new_artist, user: @user, status: 'follow')
+
+        UserArtist.find_or_create_by!(artist: artist_record, user: @user) { |ua| ua.status = 'follow' }
+      rescue StandardError => e
+        Rails.logger.warn("Spotify import skipped artist #{artist.id}: #{e.class} #{e.message}")
       end
     end
   end
 
   def youtube_url(query)
     a = MusicBrainz::Artist.find_by_name(query)
-    if a
-      url = Array(a.urls[:youtube]).compact.find { |u| u.include?('/channel/') }
-      return if url.nil?
-      if url.include?('channel')
-        channel = Yt::Channel.new id: url.split('/')[-1]
-        Nokogiri::HTML(channel.videos.first.embed_html).xpath("//iframe")[0]['src'].split('//')[-1]
-      end
-    end
+    return if a.nil?
+
+    url = Array(a.urls[:youtube]).compact.find { |u| u.include?('/channel/') }
+    return if url.nil?
+
+    channel = Yt::Channel.new(id: url.split('/').last)
+    video = channel.videos.first
+    return if video.nil?
+
+    iframe = Nokogiri::HTML(video.embed_html).xpath('//iframe').first
+    iframe&.[]('src')&.split('//')&.last
+  rescue StandardError => e
+    Rails.logger.warn("YouTube enrichment failed for #{query}: #{e.class} #{e.message}")
+    nil
   end
 
   def soundcloud_track_id(query)
     return unless defined?(SoundCloud)
 
     a = MusicBrainz::Artist.find_by_name(query)
-    if a
-      url = Array(a.urls[:soundcloud]).compact.first
-      return if url.nil?
+    return if a.nil?
 
-      client = SoundCloud.new(client_id: ENV['SC_CLIENT_ID'])
-      tracks = if url.include?('/tracks')
-                 client.get('/resolve', url: url)
-               else
-                 client.get('/resolve', url: "#{url}/tracks")
-               end
-      unless tracks.empty?
-        tracks.first.uri.split('/')[-1]
-      end
-    end
+    url = Array(a.urls[:soundcloud]).compact.first
+    return if url.nil?
+
+    client = SoundCloud.new(client_id: ENV['SC_CLIENT_ID'])
+    tracks = if url.include?('/tracks')
+               client.get('/resolve', url: url)
+             else
+               client.get('/resolve', url: "#{url}/tracks")
+             end
+
+    return if tracks.empty?
+
+    tracks.first.uri.split('/').last
+  rescue StandardError => e
+    Rails.logger.warn("SoundCloud enrichment failed for #{query}: #{e.class} #{e.message}")
+    nil
   end
 end
