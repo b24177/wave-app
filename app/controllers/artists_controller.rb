@@ -55,18 +55,18 @@ class ArtistsController < ApplicationController
       return
     end
 
-    related_artists = RSpotify::Artist.find(last_user_artist.artist.spotify_id).related_artists
+    related_artists = SpotifyClient.new.related_artists(last_user_artist.artist.spotify_id)
     @artists = related_artists.map do |artist|
-      existing_artist = Artist.find_by(spotify_id: artist.id)
+      existing_artist = Artist.find_by(spotify_id: artist['id'])
       next existing_artist if existing_artist.present?
 
       related_artist = Artist.create!(
-        name: artist.name,
-        spotify_id: artist.id,
-        followers: artist.followers["total"]
+        name: artist['name'],
+        spotify_id: artist['id'],
+        followers: artist.dig('followers', 'total')
       )
 
-      image_url = artist.images&.last&.[]("url")
+      image_url = Array(artist['images']).last&.[]('url')
       if image_url.present?
         related_artist.photo.attach(io: URI.open(image_url), filename: "avatar", content_type: "image/jpg")
       end
