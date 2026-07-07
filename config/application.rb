@@ -9,32 +9,6 @@ if ENV['RAILS_ENV']!="production"
   Dotenv::Railtie.load
 end
 
-def skip_rspotify_auth?
-  # Skip if CLIENT_ID/SECRET are missing or placeholder values
-  client_id = ENV['CLIENT_ID'].to_s.strip
-  client_secret = ENV['CLIENT_SECRET'].to_s.strip
-  
-  return true if client_id.empty? || client_secret.empty?
-  return true if client_id.include?('your_') || client_secret.include?('your_')
-  return true if client_id == 'demo' || client_secret == 'demo'
-  
-  # Skip for CLI/DB/test tasks
-  return true if ARGV.any? { |arg| arg.start_with?('db:', 'assets:', 'test', 'spec') }
-  return true if File.basename($PROGRAM_NAME) =~ /^(rake|spring|bundle)$/
-  return true if ARGV.include?('server') || ARGV.include?('s')
-  false
-end
-
-begin
-  if ENV['CLIENT_ID'].present? && ENV['CLIENT_SECRET'].present? && !skip_rspotify_auth?
-    RSpotify::authenticate(ENV.fetch('CLIENT_ID'), ENV.fetch('CLIENT_SECRET'))
-  end
-rescue RestClient::BadRequest, RestClient::Unauthorized => e
-  # Spotify auth failed, likely due to invalid credentials in development
-  # This is non-fatal; the app can still run
-  Rails.logger.warn("Spotify authentication failed: #{e.message}. Continuing without Spotify integration.")
-end
-
 module Wave
   class Application < Rails::Application
     config.generators do |generate|
