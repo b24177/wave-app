@@ -1,25 +1,25 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.7'
+ruby '3.3.11'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.2.3', '>= 7.2.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.4.6'
 # Use Puma as the app server
-gem 'puma', '~> 6.4'
+gem 'puma', '~> 7.2', '>= 7.2.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/shakacode/shakapacker
-gem 'shakapacker', '~> 6.6'
+gem 'shakapacker', '~> 9.5'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-gem 'rspotify'
 gem 'omniauth-oauth2', '~> 1.8'
+gem 'omniauth-spotify-oauth2', '~> 1.0'
 gem 'omniauth-rails_csrf_protection'
 # Spotify login and data
 gem 'redis', '~> 4.0'
@@ -34,7 +34,7 @@ gem 'yt', '~> 0.32.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-gem 'devise'
+gem 'devise', '>= 5.0.4'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
