@@ -36,6 +36,34 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.feed-avatar-link:hover,
+.feed-avatar-link:active,
+.feed-avatar-link:visited {
+  text-decoration: none;
+}
+
+.feed-avatar-link:focus {
+  outline: none;
+}
+
+.feed-avatar-link:focus-visible .feed-avatar,
+.feed-avatar-link:focus-visible .feed-avatar-fallback,
+.artist-card-avatar-link:focus-visible .artist-card-avatar,
+.artist-card-avatar-link:focus-visible .artist-card-avatar-fallback {
+  box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.45), var(--shadow-soft);
+}
+
+.artist-card-avatar-link:hover,
+.artist-card-avatar-link:active,
+.artist-card-avatar-link:visited {
+  text-decoration: none;
+}
+
+.artist-card-avatar-link:focus {
+  outline: none;
 }
 
 .feed-avatar-fallback {
