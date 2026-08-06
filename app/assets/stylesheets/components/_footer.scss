@@ -37,6 +37,12 @@
   background-color: rgba(15, 118, 110, 0.1);
 }
 
+.footer-nav-item.is-active {
+  color: var(--brand-ink);
+  background-color: rgba(15, 118, 110, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(15, 118, 110, 0.18);
+}
+
 .footer-label {
   margin-top: 4px;
   font-size: 11px;
@@ -54,6 +60,10 @@
   color: inherit;
   font-size: 18px;
   text-decoration: none;
+}
+
+.footer-item-wrap {
+  position: relative;
 }
 
 .home-icon {

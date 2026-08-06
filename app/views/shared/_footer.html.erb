@@ -1,7 +1,10 @@
 <% if current_user %>
+  <% home_active = controller_name == 'posts' %>
+  <% artists_active = controller_name == 'artists' && action_name != 'discover' %>
+  <% discover_active = controller_name == 'artists' && action_name == 'discover' %>
   <footer class="global-footer">
-    <div class="home-icon footer-nav-item">
-      <%= link_to posts_path(@post), aria: { label: 'Home' } do %>
+    <div class="home-icon footer-item-wrap">
+      <%= link_to posts_path, class: "footer-nav-item #{'is-active' if home_active}", aria: { label: 'Home' } do %>
         <i class="footer-icon fa-solid fa-house"></i>
         <span class="footer-label">Home</span>
       <% end %>
@@ -9,11 +12,11 @@
         <%= render 'shared/notification_badge' %>
       <% end %>
     </div>
-    <%= link_to artists_path(@artist), class: 'footer-nav-item', aria: { label: 'Artists' } do %>
+    <%= link_to artists_path, class: "footer-nav-item #{'is-active' if artists_active}", aria: { label: 'Artists' } do %>
       <i class="footer-icon fa-solid fa-music"></i>
       <span class="footer-label">Artists</span>
     <% end %>
-    <%= link_to discover_artists_path, class: 'footer-nav-item', aria: { label: 'Discover' } do %>
+    <%= link_to discover_artists_path, class: "footer-nav-item #{'is-active' if discover_active}", aria: { label: 'Discover' } do %>
       <i class="footer-icon fa-solid fa-earth-americas"></i>
       <span class="footer-label">Discover</span>
     <% end %>
