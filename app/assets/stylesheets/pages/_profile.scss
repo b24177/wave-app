@@ -1,0 +1,124 @@
+.profile-page {
+  width: calc(100% - 24px);
+  max-width: 760px;
+  margin: 0 auto;
+  padding-top: 8px;
+}
+
+.profile-header {
+  margin-bottom: 12px;
+}
+
+.profile-header h1 {
+  margin-bottom: 4px;
+}
+
+.profile-subtitle {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.profile-card {
+  background: var(--surface-0);
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-avatar {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid rgba(234, 88, 12, 0.28);
+  background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  flex: 0 0 auto;
+}
+
+.profile-avatar i {
+  font-size: 28px;
+}
+
+.profile-identity {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-label {
+  margin: 0 0 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.profile-identity h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-email {
+  margin: 5px 0 0;
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.profile-actions {
+  flex: 0 0 auto;
+}
+
+.profile-signout-btn {
+  background: linear-gradient(120deg, #0f172a 0%, #1f2937 100%);
+  border: 1px solid rgba(15, 23, 42, 0.24);
+  border-radius: 999px;
+  color: #f8fafc;
+  font-family: $headers-font;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  min-width: 132px;
+  height: 42px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.profile-signout-btn:hover {
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.22);
+  filter: brightness(1.03);
+}
+
+@media (max-width: 680px) {
+  .profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-identity h2 {
+    font-size: 20px;
+    white-space: normal;
+    overflow: visible;
+  }
+
+  .profile-actions,
+  .profile-signout-btn {
+    width: 100%;
+  }
+}
