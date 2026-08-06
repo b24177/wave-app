@@ -113,8 +113,24 @@
   width: 112px;
   height: 34px;
   background: var(--brand-accent);
+  border: 1px solid rgba(234, 88, 12, 0.28);
   border-radius: 999px;
   color: white;
   text-align: center;
   padding: 10px 12px;
+  box-shadow: 0 10px 24px rgba(234, 88, 12, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(234, 88, 12, 0.32);
+    filter: brightness(1.03);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(234, 88, 12, 0.45);
+    outline-offset: 2px;
+  }
 }
