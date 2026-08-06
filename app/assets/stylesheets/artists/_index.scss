@@ -126,6 +126,31 @@
 
 .artist-card-avatar-link {
 	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+}
+
+.artist-card-avatar {
+	width: 58px;
+	height: 58px;
+	object-fit: cover;
+	border-radius: 50%;
+	box-shadow: var(--shadow-soft);
+	display: block;
+}
+
+.artist-card-avatar-fallback {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #0f766e, #0ea5e9);
+	color: #ffffff;
+	font-family: $headers-font;
+	font-size: 20px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
 }
 
 .artist-card-content {

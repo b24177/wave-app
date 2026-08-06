@@ -1,9 +1,15 @@
 <div class="universal-card" data-artist="<%= artist.id %>">
   <div class="artist-card">
-    <% if artist.photo.attached? %>
-      <%= link_to artist_path(artist.id), class: 'artist-card-avatar-link' do %>
-        <%= cl_image_tag artist.photo.key %>
+    <%= link_to artist_path(artist.id), class: 'artist-card-avatar-link', aria: { label: "#{artist.name} profile" } do %>
+      <% if artist.photo.attached? %>
+        <%= cl_image_tag artist.photo.key,
+          class: 'artist-card-avatar',
+          alt: "#{artist.name} profile image",
+          onerror: "this.style.display='none'; this.nextElementSibling.style.display='flex';" %>
       <% end %>
+      <span class="artist-card-avatar artist-card-avatar-fallback" style="<%= artist.photo.attached? ? 'display:none;' : '' %>">
+        <%= artist.name.to_s.first&.upcase || '?' %>
+      </span>
     <% end %>
 
     <div class="artist-card-content">
