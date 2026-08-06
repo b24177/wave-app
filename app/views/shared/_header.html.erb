@@ -3,8 +3,10 @@
     <%= render 'shared/logo' %>
   </div>
   <div class="header-user-avatar">
-    <%= link_to profile_path(current_user) do %>
-      <%= cl_image_tag 'https://res.cloudinary.com/dtdxhxnyd/image/upload/v1602430168/dy1broo66bxwa4soe6so.jpg' %>
+    <%= link_to profile_path, aria: { label: 'Profile' } do %>
+      <span class="header-user-avatar-placeholder" aria-hidden="true">
+        <i class="fa-regular fa-user"></i>
+      </span>
     <% end %>
   </div>
 </div>
