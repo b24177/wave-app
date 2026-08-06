@@ -1,20 +1,24 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.07);
 }
 
 .header-logo svg {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  margin-top: 12px;
-  margin-left: 12px;
+  height: 44px;
+  width: 44px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
 }
 
 .header-user-avatar img {
-  height: 40px;
-  width: 40px;
+  height: 42px;
+  width: 42px;
   border-radius: 50%;
-  margin-top: 12px;
-  margin-right: 12px;
+  border: 2px solid rgba(234, 88, 12, 0.3);
+  box-shadow: var(--shadow-soft);
 }

@@ -23,10 +23,30 @@
 }
 
 .feed-avatar {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  margin: 0 8px;
+  margin: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.feed-avatar-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.feed-avatar-fallback {
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f766e, #0ea5e9);
+  color: #ffffff;
+  font-family: $headers-font;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .user-avatar img {

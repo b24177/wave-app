@@ -27,8 +27,10 @@ import "bootstrap";
 
 // Internal imports, e.g:
 import { like } from '../functionality/like';
+import { refreshCardCopyToggles } from '../functionality/card_copy_toggle';
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
-   like();
+  like();
+  refreshCardCopyToggles();
 });

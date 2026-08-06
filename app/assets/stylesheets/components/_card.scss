@@ -1,53 +1,226 @@
 .universal-card {
-  background: #FFFFFF;
-  box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
-  width: 90%;
-  margin: 16px auto;
+  background: var(--surface-0);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: var(--radius-md);
+  width: 92%;
+  max-width: 760px;
+  margin: 14px auto;
+  overflow: hidden;
 }
 
 .universal-image {
   width: 100%;
-  height: 150px;
+  height: 220px;
   object-fit: cover;
 }
 
 .feed-card h3 {
-  font-family: Roboto;
-  font-size: 11px;
+  font-family: $headers-font;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.feed-card {
+  --header-text-start: 54px;
+  --card-edge-padding: 14px;
 }
 
 .feed-card p {
-  font-family: Roboto;
-  font-size: 11px;
+  font-family: $body-font;
+  font-size: 14px;
+  color: var(--text-soft);
+  margin: 0;
 }
 
 .feed-card .post-title {
   display: flex;
   align-items: flex-start;
-  padding-top: 10px;
-  margin-bottom: 8px;
+  gap: 12px;
+  padding: 14px 14px 8px;
+  margin-bottom: 2px;
+
   h3{
-    margin-bottom: 0;
+    margin: 0;
   }
+}
+
+.post-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: flex-start;
+}
+
+.post-heading {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 6px;
+  line-height: 1.15;
+}
+
+.feed-card .post-heading .artist-name {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.feed-card .feed-avatar-link {
+  align-self: flex-start;
+}
+
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  line-height: 1.4;
+}
+
+.source-generic {
+  background: rgba(14, 116, 144, 0.12);
+  border-color: rgba(14, 116, 144, 0.24);
+  color: #0e7490;
+}
+
+.source-twitter {
+  background: rgba(29, 161, 242, 0.14);
+  border-color: rgba(29, 161, 242, 0.28);
+  color: #0f78be;
+}
+
+.source-instagram {
+  background: rgba(225, 48, 108, 0.14);
+  border-color: rgba(225, 48, 108, 0.24);
+  color: #be2d62;
+}
+
+.source-facebook {
+  background: rgba(66, 103, 178, 0.14);
+  border-color: rgba(66, 103, 178, 0.24);
+  color: #3558a4;
+}
+
+.source-youtube {
+  background: rgba(255, 0, 0, 0.12);
+  border-color: rgba(255, 0, 0, 0.2);
+  color: #c51515;
+}
+
+.source-ticketmaster {
+  background: rgba(1, 102, 204, 0.14);
+  border-color: rgba(1, 102, 204, 0.26);
+  color: #0056ae;
+}
+
+.card-copy {
+  display: grid;
+  gap: 8px;
+  padding: 0 var(--card-edge-padding) 10px var(--header-text-start);
+}
+
+.card-copy .card-copy-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.card-copy .card-copy-text.is-clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.card-copy.is-expanded .card-copy-text.is-clamped {
+  display: block;
+  -webkit-line-clamp: initial;
+  overflow: visible;
+}
+
+.card-copy-toggle {
+  justify-self: start;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--brand-ink);
+  font-family: $headers-font;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.card-copy-toggle:hover {
+  color: var(--brand-accent);
+}
+
+.card-copy-toggle:focus-visible {
+  outline: 2px solid rgba(15, 118, 110, 0.45);
+  outline-offset: 4px;
+  border-radius: 6px;
 }
 
 .card-share {
   display: flex;
   justify-content: flex-end;
-  padding: 8px;
-  i {
-    margin: 0 2px;
-    font-size: 19px;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 12px;
+
+  .card-action {
+    border: 0;
+    padding: 0;
+    appearance: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    font-size: 17px;
+    margin: 0;
+    color: var(--text-soft);
+    background: rgba(15, 23, 42, 0.04);
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+
+    i {
+      line-height: 1;
+      pointer-events: none;
+    }
+
     &:hover {
-      cursor: pointer;
+      color: var(--brand-ink);
+      background: rgba(15, 118, 110, 0.12);
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(15, 118, 110, 0.5);
+      outline-offset: 2px;
+      color: var(--brand-ink);
+      background: rgba(15, 118, 110, 0.14);
     }
   }
 }
 
 .artist-card {
   display: flex;
-  padding: 32px 16px;
+  padding: 18px 14px;
   align-items: center;
   justify-content: space-between;
 }
@@ -57,22 +230,24 @@
 }
 
 .artist-card img {
-  width: 50px;
-  height: 50px;
+  width: 58px;
+  height: 58px;
   object-fit: cover;
   border-radius: 50%;
+  box-shadow: var(--shadow-soft);
 }
 
 .artist-card h3 {
-  font-family: Roboto;
-  font-size: 17px;
+  font-family: $headers-font;
+  font-size: 18px;
   font-weight: 700;
 }
 
 .artist-card p {
-  font-family: Roboto;
-  font-size: 12px;
-  font-weight: 300;
+  font-family: $body-font;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-soft);
 }
 
 .artist-card-content {
@@ -87,6 +262,157 @@
   margin-bottom: 4px;
 }
 
+.ticketmaster-card .post-meta {
+  gap: 3px;
+}
+
+.ticketmaster-event-name {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-strong);
+  line-height: 1.35;
+}
+
+.ticketmaster-meta-line {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.ticketmaster-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px 12px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
 .ticketmaster-cta {
-  padding: 0 10px 6px;
+  padding: 0;
+}
+
+.ticketmaster-cta .btn-buy-tickets {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.ticketmaster-share {
+  padding: 0;
+  margin-left: auto;
+}
+
+.youtube-embed-wrapper {
+  width: calc(100% - 24px);
+  margin: 2px auto 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  background: #000;
+}
+
+.youtube-embed-wrapper iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 390px) {
+  .universal-card {
+    width: 94%;
+    border-radius: 14px;
+    margin: 12px auto;
+  }
+
+  .feed-card {
+    --header-text-start: 49px;
+    --card-edge-padding: 11px;
+  }
+
+  .feed-card .post-title {
+    gap: 10px;
+    padding: 12px 11px 7px;
+  }
+
+  .feed-card h3 {
+    font-size: 11px;
+  }
+
+  .feed-card .post-heading .artist-name {
+    font-size: 13px;
+  }
+
+  .source-chip {
+    font-size: 9px;
+    padding: 2px 7px;
+  }
+
+  .card-copy {
+    gap: 7px;
+    padding: 0 var(--card-edge-padding) 9px var(--header-text-start);
+  }
+
+  .card-copy .card-copy-text {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .card-copy-toggle {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .universal-image {
+    height: 190px;
+  }
+
+  .youtube-embed-wrapper {
+    width: calc(100% - 18px);
+    border-radius: 12px;
+  }
+
+  .card-share {
+    padding: 6px 10px 10px;
+    gap: 5px;
+
+    .card-action {
+      width: 30px;
+      height: 30px;
+      font-size: 15px;
+    }
+  }
+
+  .ticketmaster-footer {
+    padding: 9px 10px 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ticketmaster-cta .btn-buy-tickets {
+    width: auto;
+    min-width: 104px;
+    height: 32px;
+    font-size: 9px;
+    padding: 9px 10px;
+  }
+
+  .ticketmaster-share {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-copy-toggle,
+  .card-share .card-action {
+    transition: none;
+  }
+
+  .card-share .card-action:hover,
+  .card-share .card-action:focus-visible {
+    transform: none;
+  }
 }

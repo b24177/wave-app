@@ -28,16 +28,17 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def spotify
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    auth = request.env['omniauth.auth']
+    @user = User.from_omniauth(auth)
 
     unless @user.persisted?
       @user.save!
     end
 
     follow_seed_artists(@user)
-    enqueue_spotify_import(@user, request.env['omniauth.auth'])
+    import_state = bootstrap_spotify_import(@user, auth)
 
-    flash[:notice] = 'Spotify import started. Your followed artists will continue syncing in the background.'
+    flash[:notice] = spotify_import_notice(import_state)
 
     sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
 
@@ -57,7 +58,61 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def enqueue_spotify_import(user, auth)
-    SpotifyFollowedArtistsImportJob.perform_later(user.id, auth.to_h)
+  def bootstrap_spotify_import(user, auth)
+    auth_hash = auth.to_h
+    import_state = { imported_now: false, queued: false }
+
+    summary = import_first_spotify_page(user, auth_hash)
+    import_state[:imported_now] = summary.present?
+
+    next_after = summary&.fetch(:next_after, nil)
+    if next_after.present?
+      import_state[:queued] = enqueue_spotify_import(user, auth_hash, next_after)
+    elsif summary.nil?
+      import_state[:queued] = enqueue_spotify_import(user, auth_hash)
+    end
+
+    import_state
+  rescue StandardError => e
+    Rails.logger.warn("Spotify login import bootstrap failed for user #{user.id}: #{e.class} #{e.message}")
+    { imported_now: false, queued: enqueue_spotify_import(user, auth.to_h) }
+  end
+
+  def import_first_spotify_page(user, auth_hash)
+    access_token = extract_access_token(auth_hash)
+    return nil if access_token.blank?
+
+    spotify_client = SpotifyClient.new(user_access_token: access_token)
+    SpotifyFollowedArtistsImporter.new(user: user, spotify_client: spotify_client).import_page
+  rescue StandardError => e
+    Rails.logger.warn("Spotify immediate import failed for user #{user.id}: #{e.class} #{e.message}")
+    nil
+  end
+
+  def enqueue_spotify_import(user, auth_hash, after = nil)
+    SpotifyFollowedArtistsImportJob.perform_later(user.id, auth_hash, after)
+    true
+  rescue StandardError => e
+    Rails.logger.warn("Spotify background enqueue failed for user #{user.id}: #{e.class} #{e.message}")
+    false
+  end
+
+  def extract_access_token(auth_hash)
+    auth_hash&.dig('credentials', 'token') || auth_hash&.dig(:credentials, :token)
+  end
+
+  def spotify_import_notice(import_state)
+    imported_now = import_state.fetch(:imported_now, false)
+    queued = import_state.fetch(:queued, false)
+
+    if imported_now && queued
+      'Imported your first Spotify artists. We will keep syncing the rest in the background.'
+    elsif imported_now
+      'Imported your Spotify artists now. Background sync is currently unavailable, but your artists are ready.'
+    elsif queued
+      'Spotify import started. Your followed artists will continue syncing in the background.'
+    else
+      'We could not start Spotify import right now. Please try reconnecting Spotify in a moment.'
+    end
   end
 end

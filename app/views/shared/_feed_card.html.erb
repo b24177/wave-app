@@ -1,22 +1,36 @@
 <div class="universal-card feed-card">
   <div class="post-title">
-    <% if post.artist.photo.attached? %>
-      <%= link_to artist_path(post.artist) do %>
-        <%= cl_image_tag post.artist.photo.key, class: "feed-avatar"%>
-      <% end %>
-    <h3><%= post.artist.name %> posted on <span style="color:#1777f2"><%= post.source %></span></h3>
-    <% end %>
+    <%= render 'shared/artist_avatar', artist: post.artist %>
+    <div class="post-meta">
+      <h3 class="post-heading">
+        <span class="artist-name"><%= post.artist.name %></span>
+        <span class="source-chip source-generic"><%= post.source %></span>
+      </h3>
+    </div>
   </div>
-  <% if post.contents %>
-    <% post.contents.each do |content| %>
-      <p><%= content.data if content.format == 'text' %></p>
-      <% if content.format == 'image' %>
-        <%= cl_image_tag content.data, class: "universal-image" %>
+  <% text_contents = Array(post.contents).select { |content| content.format == 'text' && content.data.present? } %>
+  <% if text_contents.any? %>
+    <div class="card-copy js-card-copy">
+      <% text_contents.each do |content| %>
+        <p class="card-copy-text"><%= content.data %></p>
       <% end %>
+      <button type="button" class="card-copy-toggle" hidden aria-expanded="false">Read more</button>
+    </div>
+  <% end %>
+
+  <% image_contents = Array(post.contents).select { |content| content.format == 'image' && content.data.present? } %>
+  <% if image_contents.any? %>
+    <% image_contents.each do |content| %>
+      <%= cl_image_tag content.data, class: "universal-image" %>
     <% end %>
   <% end %>
+
   <div class="card-share">
-    <i class="fal fa-retweet"></i>
-    <i class="fal fa-heart"></i>
+    <button type="button" class="card-action" aria-label="Repost">
+      <i class="fa-solid fa-retweet" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="card-action" aria-label="Like">
+      <i class="fa-regular fa-heart" aria-hidden="true"></i>
+    </button>
   </div>
 </div>

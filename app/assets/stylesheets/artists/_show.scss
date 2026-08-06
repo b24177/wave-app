@@ -14,23 +14,19 @@
 }
 
 .artist-details h3 {
-
-}
-.artist-img img {
-  border-radius: 50%;
-  width: 116px;
-  height: 116px;
-}
-
-.artist-name {
   font-family: Roboto;
   font-size: 39px;
   font-style: normal;
   font-weight: 700;
   line-height: 46px;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: center;
+}
 
+.artist-img img {
+  border-radius: 50%;
+  width: 116px;
+  height: 116px;
 }
 
 .artist-page-wrapper {

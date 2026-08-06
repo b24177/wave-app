@@ -8,22 +8,21 @@
 
 <div class="universal-card feed-card ticketmaster-card">
   <div class="post-title">
-    <% if post.artist.photo.attached? %>
-      <%= link_to artist_path(post.artist) do %>
-        <%= cl_image_tag post.artist.photo.key, class: "feed-avatar" %>
-      <% end %>
-    <% end %>
-    <div>
-      <h3><%= post.artist.name %> posted on <span style="color:#0166cc"><%= post.source %></span></h3>
+    <%= render 'shared/artist_avatar', artist: post.artist %>
+    <div class="post-meta">
+      <h3 class="post-heading">
+        <span class="artist-name"><%= post.artist.name %></span>
+        <span class="source-chip source-ticketmaster"><%= post.source %></span>
+      </h3>
       <% if event_name.present? %>
-        <p><strong><%= event_name %></strong></p>
+        <p class="ticketmaster-event-name"><%= event_name %></p>
       <% end %>
       <% if starts_at.present? %>
         <% parsed_time = Time.zone.parse(starts_at) rescue nil %>
-        <p><%= parsed_time ? parsed_time.strftime('%b %-d, %Y %l:%M %p') : starts_at %></p>
+        <p class="ticketmaster-meta-line"><%= parsed_time ? parsed_time.strftime('%b %-d, %Y %l:%M %p') : starts_at %></p>
       <% end %>
       <% if venue.present? || city.present? %>
-        <p><%= [venue, city].compact.join(' • ') %></p>
+        <p class="ticketmaster-meta-line"><%= [venue, city].compact.join(' • ') %></p>
       <% end %>
     </div>
   </div>
@@ -32,14 +31,20 @@
     <img src="<%= image_url %>" class="universal-image" alt="Ticketmaster event image">
   <% end %>
 
-  <% if ticket_url.present? %>
-    <div class="ticketmaster-cta">
-      <%= link_to 'VIEW TICKETS', ticket_url, target: '_blank', rel: 'noopener noreferrer', class: 'btn-follow' %>
-    </div>
-  <% end %>
+  <div class="ticketmaster-footer">
+    <% if ticket_url.present? %>
+      <div class="ticketmaster-cta">
+        <%= link_to 'VIEW TICKETS', ticket_url, target: '_blank', rel: 'noopener noreferrer', class: 'btn-buy-tickets' %>
+      </div>
+    <% end %>
 
-  <div class="card-share">
-    <i class="fal fa-retweet"></i>
-    <i class="fal fa-heart"></i>
+    <div class="card-share ticketmaster-share">
+      <button type="button" class="card-action" aria-label="Repost">
+        <i class="fa-solid fa-retweet" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="card-action" aria-label="Like">
+        <i class="fa-regular fa-heart" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </div>

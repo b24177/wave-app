@@ -1,0 +1,11 @@
+<%= link_to artist_path(artist), class: 'feed-avatar-link', aria: { label: "#{artist.name} profile" } do %>
+  <% if artist.photo.attached? %>
+    <%= cl_image_tag artist.photo.key,
+      class: 'feed-avatar js-feed-avatar',
+      alt: "#{artist.name} profile image",
+      onerror: "this.style.display='none'; this.nextElementSibling.style.display='flex';" %>
+  <% end %>
+  <span class="feed-avatar feed-avatar-fallback" style="<%= artist.photo.attached? ? 'display:none;' : '' %>">
+    <%= artist.name.to_s.first&.upcase || '?' %>
+  </span>
+<% end %>

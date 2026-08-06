@@ -1,31 +1,33 @@
 <%- if devise_mapping.omniauthable? %>
+  <div class="devise-auth-links">
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= button_to "LOG IN WITH SPOTIFY",
       omniauth_authorize_path(resource_name, provider),
       method: :post,
       form: { data: { turbo: false } },
-      class: 'btn-login-invert mb-5 mt-5' %>
-    <br />
+      form_class: 'devise-provider-form',
+      class: 'btn-signup-invert devise-spotify-btn' %>
   <% end %>
 
 <%- if controller_name != 'sessions' %>
-  <%= link_to "LOG IN WITH EMAIL", new_session_path(resource_name), class: 'btn-login-invert mt-5 mb-5' %><br />
+  <%= link_to "LOG IN WITH EMAIL", new_session_path(resource_name), class: 'devise-secondary-link' %>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "SIGN UP", new_registration_path(resource_name), class: 'btn-login-invert mb-5 mt-5' %><br />
+  <%= link_to "SIGN UP", new_registration_path(resource_name), class: 'devise-secondary-link' %>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'btn-login-invert mt-5 mb-5' %><br />
+  <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'devise-secondary-link devise-secondary-link-muted' %>
 <% end %>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: 'devise-secondary-link devise-secondary-link-muted' %>
 <% end %>
 
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: 'devise-secondary-link devise-secondary-link-muted' %>
 <% end %>
+  </div>
 
 <% end %>

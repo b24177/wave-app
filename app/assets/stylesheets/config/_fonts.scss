@@ -1,10 +1,9 @@
-// Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
+// Import modern type families for a cleaner hierarchy
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
 // Define fonts for body and headers
-$body-font: 'Roboto', sans-serif;
-$headers-font: 'Roboto', sans-serif;
+$body-font: 'Manrope', sans-serif;
+$headers-font: 'Space Grotesk', sans-serif;
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {
@@ -15,6 +14,3 @@ $headers-font: 'Roboto', sans-serif;
 //        font-url('FontFile.ttf') format('truetype')
 // }
 // $my-font: "Font Name";
-
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');

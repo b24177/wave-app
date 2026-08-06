@@ -1,18 +1,72 @@
-body {
-  background-color: #fff;
+.devise-session {
+  max-width: 460px;
+  padding-bottom: 20px;
 }
-h1 {
+
+.devise-session-header h2 {
   font-family: $headers-font;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 42px;
+  font-weight: 700;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  margin-top: 12px;
+  margin-bottom: 0;
 }
-p {
-  margin: 0 auto;
+
+.devise-session .form-actions .btn-signup-invert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 260px;
+  width: 100%;
+}
+
+.devise-session-links {
+  margin-top: 6px;
+}
+
+.devise-auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.devise-provider-form {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.devise-spotify-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 260px;
+  width: 100%;
+  border: 0;
+}
+
+.devise-secondary-link {
+  color: var(--text-strong);
+  font-family: $headers-font;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.devise-secondary-link:hover {
+  color: var(--brand-ink);
+  text-decoration: none;
+}
+
+.devise-secondary-link-muted {
   font-family: $body-font;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 21px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-soft);
 }

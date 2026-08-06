@@ -1,18 +1,30 @@
 <div class="universal-card feed-card">
   <div class="post-title">
-    <% if post.artist.photo.attached? %>
-      <%= link_to artist_path(post.artist) do %>
-        <%= cl_image_tag post.artist.photo.key, class: "feed-avatar"%>
-      <% end %>
-    <h3><%= post.artist.name %> posted on <span style="color:#FF0000"><%= post.source %></span></h3>
-    <% end %>
+    <%= render 'shared/artist_avatar', artist: post.artist %>
+    <div class="post-meta">
+      <h3 class="post-heading">
+        <span class="artist-name"><%= post.artist.name %></span>
+        <span class="source-chip source-youtube"><%= post.source %></span>
+      </h3>
+    </div>
   </div>
   <% if post.contents %>
-      <iframe style="margin-top: 8px;" width="318" height="179" src="https://<%= post.contents[0].data %>" frameborder="0" allowfullscreen></iframe>
+    <div class="youtube-embed-wrapper">
+      <iframe
+        src="https://<%= post.contents[0].data %>"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
   <% end %>
   <div class="card-share">
-    <i class="fal fa-retweet"></i>
-    <i class="fal fa-heart"></i>
+    <button type="button" class="card-action" aria-label="Repost">
+      <i class="fa-solid fa-retweet" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="card-action" aria-label="Like">
+      <i class="fa-regular fa-heart" aria-hidden="true"></i>
+    </button>
   </div>
 </div>
 

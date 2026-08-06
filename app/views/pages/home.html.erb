@@ -1,16 +1,20 @@
 <div class="home-cover">
-  <div class="text-center fixed-top mt-4 py-4">
-    <%= render 'shared/animated_logo' %>
-    <h1 class="home-title">Welcome to Wave!</h1>
-    <p>All content from your favorite music artists in one app!</p>
+  <div class="home-backdrop"></div>
+  <div class="home-shell text-center">
+    <div class="home-brand">
+      <%= render 'shared/animated_logo' %>
+      <h1 class="home-title">Your Music World, In One Feed</h1>
+      <p class="home-subtitle">Track releases, videos, and tour moments from every artist you care about.</p>
+    </div>
   </div>
-  <div class="btns-home fixed-bottom mb-4 pb-6">
-    <%= link_to 'SIGN UP', new_user_registration_path, class: 'btn-signup mb-4' %>
+  <div class="btns-home">
+    <%= link_to 'CREATE ACCOUNT', new_user_registration_path, class: 'btn-signup home-primary-btn' %>
     <%= button_to 'LOG IN WITH SPOTIFY',
       user_spotify_omniauth_authorize_path,
       method: :post,
       form: { data: { turbo: false } },
-      class: 'btn-login mb-1' %>
-    <%= link_to 'LOG IN WITH EMAIL', new_user_session_path, class: 'btn-login' %>
+      form_class: 'home-spotify-form',
+      class: 'home-auth-btn' %>
+    <%= link_to 'LOG IN WITH EMAIL', new_user_session_path, class: 'home-auth-btn' %>
   </div>
 </div>

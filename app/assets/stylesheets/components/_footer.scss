@@ -1,14 +1,21 @@
 .global-footer {
-  height: 69px;
-  width: 100%;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.07);
+  height: 72px;
+  width: calc(100% - 24px);
+  max-width: 560px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(15, 118, 110, 0.16);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 8px 16px;
   position: fixed;
-  background-color: white;
-  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px;
+  z-index: 20;
 }
 
 .footer-nav-item {
@@ -16,30 +23,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: var(--text-soft);
   text-decoration: none;
-  min-width: 72px;
+  min-width: 92px;
+  height: 56px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .footer-nav-item:hover {
   text-decoration: none;
+  color: var(--brand-ink);
+  background-color: rgba(15, 118, 110, 0.1);
 }
 
 .footer-label {
-  margin-top: 2px;
+  margin-top: 4px;
   font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   line-height: 1;
 }
 
 .global-footer i {
-  font-weight: light;
-  font-size: 24px;
+  font-size: 18px;
   text-decoration: none;
 }
 
 .footer-icon {
-  color: black;
-  font-size: 20px;
+  color: inherit;
+  font-size: 18px;
   text-decoration: none;
 }
 
@@ -50,15 +63,17 @@
 .notification-badge {
   color: black;
   position: absolute;
-  left: 14px;
-  bottom: 13px;
-  height: 18px;
-  width: 18px;
+  right: 16px;
+  top: 8px;
+  height: 19px;
+  width: 19px;
   border-radius: 50%;
-  font-size: 12px;
-  background-color: black;
+  font-size: 11px;
+  background-color: var(--brand-accent);
   color: white;
   text-align: center;
+  line-height: 19px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95);
 }
 
 .notification-badge:hover {

@@ -1,18 +1,29 @@
 <div class="pb-5">
-  <% @posts.each do |post| %>
-  <%  case post.source %>
-    <% when 'Ticketmaster' %>
-    <%= render "shared/ticketmaster_card", post:post %>
-    <% when 'Youtube' %>
-    <%= render "shared/youtube_card", post:post%>
-    <% when 'Facebook' %>
-    <%= render "shared/facebook_card", post:post%>
-    <% when 'Twitter' %>
-    <%= render "shared/twitter_card", post:post%>
-    <% when 'Instagram' %>
-    <%= render "shared/instagram_card", post:post%>
-     <% else %>
-    <%= render "shared/feed_card", post:post%>
-    <%  end %>
+  <% if @posts.any? %>
+    <% @posts.each do |post| %>
+    <%  case post.source %>
+      <% when 'Ticketmaster' %>
+      <%= render "shared/ticketmaster_card", post:post %>
+      <% when 'Youtube' %>
+      <%= render "shared/youtube_card", post:post%>
+      <% when 'Facebook' %>
+      <%= render "shared/facebook_card", post:post%>
+      <% when 'Twitter' %>
+      <%= render "shared/twitter_card", post:post%>
+      <% when 'Instagram' %>
+      <%= render "shared/instagram_card", post:post%>
+      <% else %>
+      <%= render "shared/feed_card", post:post%>
+      <%  end %>
+    <% end %>
+  <% else %>
+    <div class="universal-card p-4 text-center">
+      <h3 class="mb-2">Your feed is ready for discovery</h3>
+      <p class="mb-3">Follow more artists to populate your home feed with posts, videos, and tour updates.</p>
+      <%= link_to 'Discover Artists', discover_artists_path, class: 'btn-signup-invert d-inline-block text-decoration-none mb-2' %>
+      <div>
+        <%= link_to 'Go To Artists', artists_path, class: 'btn-login-invert text-decoration-none' %>
+      </div>
+    </div>
   <% end %>
 </div>
