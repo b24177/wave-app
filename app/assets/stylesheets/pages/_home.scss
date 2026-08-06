@@ -34,6 +34,12 @@
   margin: 0 auto;
 }
 
+.home-brand .wave-logo-svg {
+  height: 66px;
+  margin: 0 auto 8px;
+  filter: drop-shadow(0 10px 24px rgba(8, 21, 26, 0.35));
+}
+
 .home-title {
   font-family: $headers-font;
   color: #ffffff;

@@ -8,11 +8,22 @@
   border-bottom: 1px solid rgba(15, 23, 42, 0.07);
 }
 
-.header-logo svg {
+.wave-logo-svg {
+  width: auto;
   height: 44px;
-  width: 44px;
-  border-radius: 14px;
-  box-shadow: var(--shadow-soft);
+  display: block;
+}
+
+.wave-logo-word {
+  fill: var(--text-strong);
+  font-family: "Sora", "Space Grotesk", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.header-logo .wave-logo-svg {
+  height: 34px;
 }
 
 .header-user-avatar img {
