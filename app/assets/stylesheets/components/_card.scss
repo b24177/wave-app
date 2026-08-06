@@ -313,6 +313,22 @@
   box-shadow: var(--shadow-soft);
   background: #000;
 }
+.youtube-open-link-row {
+  margin: 8px 14px 0;
+}
+.youtube-open-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.youtube-open-link:hover {
+  color: var(--brand-strong);
+}
 
 .youtube-embed-wrapper iframe {
   width: 100%;

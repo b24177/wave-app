@@ -8,15 +8,39 @@
       </h3>
     </div>
   </div>
-  <% if post.contents %>
+  <% raw_video_data = post.contents&.first&.data.to_s %>
+  <% youtube_video_id =
+      if raw_video_data.include?('youtube.com/embed/')
+        raw_video_data.split('youtube.com/embed/').last.to_s.split(/[?&#]/).first
+      elsif raw_video_data.include?('youtu.be/')
+        raw_video_data.split('youtu.be/').last.to_s.split(/[?&#]/).first
+      elsif raw_video_data.match?(/\A[a-zA-Z0-9_-]{11}\z/)
+        raw_video_data
+      else
+        raw_video_data.split('/').last.to_s.split(/[?&#]/).first
+      end %>
+  <% if youtube_video_id.present? %>
+    <% youtube_origin = ERB::Util.url_encode(request.base_url) %>
+    <% youtube_src = "https://www.youtube.com/embed/#{youtube_video_id}?rel=0&playsinline=1&enablejsapi=1&origin=#{youtube_origin}&widget_referrer=#{youtube_origin}" %>
     <div class="youtube-embed-wrapper">
       <iframe
-        src="https://<%= post.contents[0].data %>"
+        src="<%= youtube_src %>"
         frameborder="0"
+        loading="lazy"
+        referrerpolicy="origin"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
+        title="<%= "#{post.artist.name} on YouTube" %>"
       ></iframe>
     </div>
+    <div class="youtube-open-link-row">
+      <a href="https://www.youtube.com/watch?v=<%= youtube_video_id %>" target="_blank" rel="noopener noreferrer" class="youtube-open-link">Watch on YouTube</a>
+    </div>
+  <% elsif raw_video_data.present? %>
+    <p class="card-copy-text">
+      Video unavailable in embed.
+      <a href="https://www.youtube.com/watch?v=<%= youtube_video_id %>" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+    </p>
   <% end %>
   <div class="card-share">
     <button type="button" class="card-action" aria-label="Repost">
